@@ -5,6 +5,7 @@ import (
 	"github.com/Searedphantasm/bookings/pkg/config"
 	"github.com/Searedphantasm/bookings/pkg/handlers"
 	"github.com/Searedphantasm/bookings/pkg/render"
+	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
 	"time"

@@ -6,3 +6,7 @@
     color: white;
     font-size: 80%;
 }
+
+.datepicker{
+    z-index: 10000 !important;
+}

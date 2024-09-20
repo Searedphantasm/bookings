@@ -29,24 +29,35 @@ func NewHandlers(r *Repository) {
 
 // Home is the about page handler
 func (m *Repository) Home(writer http.ResponseWriter, request *http.Request) {
-	remoteIP := request.RemoteAddr
-	m.App.Session.Put(request.Context(), "remote_ip", remoteIP)
-
 	render.RenderTemplate(writer, "home.page.gohtml", &models.TemplateData{})
 }
 
 // About is the about page handler
 func (m *Repository) About(writer http.ResponseWriter, request *http.Request) {
-	// perform some logic
-	stringMap := make(map[string]string)
-	stringMap["test"] = "Hello again."
+	render.RenderTemplate(writer, "about.page.gohtml", &models.TemplateData{})
+}
 
-	remoteIP := m.App.Session.GetString(request.Context(), "remote_ip")
+// Reservations renders the make a reservations and display form
+func (m *Repository) Reservations(writer http.ResponseWriter, request *http.Request) {
+	render.RenderTemplate(writer, "make-reservation.page.gohtml", &models.TemplateData{})
+}
 
-	stringMap["remote_ip"] = remoteIP
+// Generals renders the room page
+func (m *Repository) Generals(writer http.ResponseWriter, request *http.Request) {
+	render.RenderTemplate(writer, "generals.page.gohtml", &models.TemplateData{})
+}
 
-	// send the data to the template
-	render.RenderTemplate(writer, "about.page.gohtml", &models.TemplateData{
-		StringMap: stringMap,
-	})
+// Majors is the about majors room handler
+func (m *Repository) Majors(writer http.ResponseWriter, request *http.Request) {
+	render.RenderTemplate(writer, "majors.page.gohtml", &models.TemplateData{})
+}
+
+// Availability is the availability page handler
+func (m *Repository) Availability(writer http.ResponseWriter, request *http.Request) {
+	render.RenderTemplate(writer, "search-availability.page.gohtml", &models.TemplateData{})
+}
+
+// Contact is the contact page handler
+func (m *Repository) Contact(writer http.ResponseWriter, request *http.Request) {
+	render.RenderTemplate(writer, "contact.page.gohtml", &models.TemplateData{})
 }

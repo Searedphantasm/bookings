@@ -2,8 +2,8 @@ package render
 
 import (
 	"bytes"
-	"github.com/Searedphantasm/bookings/pkg/config"
-	"github.com/Searedphantasm/bookings/pkg/models"
+	"github.com/Searedphantasm/bookings/internal/config"
+	"github.com/Searedphantasm/bookings/internal/models"
 	"github.com/justinas/nosurf"
 	"html/template"
 	"log"

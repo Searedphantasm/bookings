@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/Searedphantasm/bookings/pkg/config"
-	"github.com/Searedphantasm/bookings/pkg/models"
-	"github.com/Searedphantasm/bookings/pkg/render"
+	"github.com/Searedphantasm/bookings/internal/config"
+	"github.com/Searedphantasm/bookings/internal/models"
+	"github.com/Searedphantasm/bookings/internal/render"
+	"log"
 	"net/http"
 )
 
@@ -58,12 +60,33 @@ func (m *Repository) Availability(writer http.ResponseWriter, request *http.Requ
 	render.RenderTemplate(writer, request, "search-availability.page.gohtml", &models.TemplateData{})
 }
 
-// PostAvailability is the availability page handler
+// PostAvailability
 func (m *Repository) PostAvailability(writer http.ResponseWriter, request *http.Request) {
 	start := request.Form.Get("start")
 	end := request.Form.Get("end")
 
 	writer.Write([]byte(fmt.Sprintf("Start date is %s and end date is %s", start, end)))
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+// AvailabilityJson handles request for availability and send JSON response
+func (m *Repository) AvailabilityJson(writer http.ResponseWriter, request *http.Request) {
+	resp := jsonResponse{
+		OK:      false,
+		Message: "Available!",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "     ")
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(string(out))
+	writer.Header().Set("Content-Type", "application/json")
+	writer.Write(out)
 }
 
 // Contact is the contact page handler

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/Searedphantasm/bookings/pkg/config"
-	"github.com/Searedphantasm/bookings/pkg/handlers"
-	"github.com/Searedphantasm/bookings/pkg/render"
+	"github.com/Searedphantasm/bookings/internal/config"
+	"github.com/Searedphantasm/bookings/internal/handlers"
+	"github.com/Searedphantasm/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"

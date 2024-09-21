@@ -43,14 +43,46 @@ func (m *Repository) About(writer http.ResponseWriter, request *http.Request) {
 
 // Reservations renders the make a reservations and display form
 func (m *Repository) Reservations(writer http.ResponseWriter, request *http.Request) {
+	var emptyReservation models.Reservation
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReservation
+
 	render.RenderTemplate(writer, request, "make-reservation.page.gohtml", &models.TemplateData{
 		Form: forms.New(nil),
+		Data: data,
 	})
 }
 
 // PostReservations handles the posting of reservation form.
 func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.Request) {
+	err := request.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
+	reservation := models.Reservation{
+		FirstName: request.Form.Get("first_name"),
+		LastName:  request.Form.Get("last_name"),
+		Phone:     request.Form.Get("phone"),
+		Email:     request.Form.Get("email"),
+	}
+
+	form := forms.New(request.PostForm)
+
+	form.Required("first_name", "last_name", "email")
+	form.MinLength("first_name", 3, request)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		render.RenderTemplate(writer, request, "make-reservation.page.gohtml", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
 }
 
 // Generals renders the room page

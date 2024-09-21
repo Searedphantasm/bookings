@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/Searedphantasm/bookings/pkg/config"
 	"github.com/Searedphantasm/bookings/pkg/models"
+	"github.com/justinas/nosurf"
 	"html/template"
 	"log"
 	"net/http"
@@ -20,12 +21,13 @@ func NewTemplates(a *config.AppConfig) {
 
 // TODO: adding default data for all templates.
 // AddDefaultData add default data to all templates
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, request *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(request)
 	return td
 }
 
 // RenderTemplate renders html templates
-func RenderTemplate(writer http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(writer http.ResponseWriter, request *http.Request, tmpl string, td *models.TemplateData) {
 	var tc map[string]*template.Template
 
 	if app.UseCache {
@@ -42,7 +44,7 @@ func RenderTemplate(writer http.ResponseWriter, tmpl string, td *models.Template
 
 	buf := new(bytes.Buffer) // something that holds bytes
 
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, request)
 
 	err := t.Execute(buf, td)
 

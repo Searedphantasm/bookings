@@ -8,7 +8,8 @@
                 <h1>Make reservation</h1>
                 <h5>Reservation Details</h5>
 
-                <form method="post" action="" class="needs-validation" novalidate>
+                <form method="post" action="/make-reservation" class="" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="mt-4">
                         <label class="form-label" for="first_name">First Name:</label>
                         <input type="text" name="first_name" id="first_name" class="form-control" required autocomplete="off">

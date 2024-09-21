@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/Searedphantasm/bookings/internal/config"
+	"github.com/Searedphantasm/bookings/internal/forms"
 	"github.com/Searedphantasm/bookings/internal/models"
 	"github.com/Searedphantasm/bookings/internal/render"
 	"log"
@@ -42,7 +43,14 @@ func (m *Repository) About(writer http.ResponseWriter, request *http.Request) {
 
 // Reservations renders the make a reservations and display form
 func (m *Repository) Reservations(writer http.ResponseWriter, request *http.Request) {
-	render.RenderTemplate(writer, request, "make-reservation.page.gohtml", &models.TemplateData{})
+	render.RenderTemplate(writer, request, "make-reservation.page.gohtml", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// PostReservations handles the posting of reservation form.
+func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.Request) {
+
 }
 
 // Generals renders the room page

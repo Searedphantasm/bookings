@@ -95,7 +95,7 @@ func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
 
-// CreateTemplateCache creates a template cache as a map
+// CreateTestTemplateCache creates a template cache as a map
 func CreateTestTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 

@@ -1,0 +1,22 @@
+mode: set
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:23.47,27.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:30.33,32.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:35.78,37.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:40.79,42.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:45.86,54.2 4 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:57.90,59.16 2 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:59.16,62.3 2 0
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:64.2,77.19 6 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:77.19,86.3 4 0
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:88.2,90.77 2 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:95.82,97.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:100.80,102.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:105.86,107.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:110.90,115.2 3 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:123.90,130.16 3 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:130.16,132.3 1 0
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:134.2,135.19 2 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:139.81,141.2 1 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:143.92,145.9 2 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:145.9,150.3 4 1
+github.com/Searedphantasm/bookings/internal/handlers/handlers.go:152.2,159.4 4 0

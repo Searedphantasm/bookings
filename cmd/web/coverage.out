@@ -1,0 +1,10 @@
+mode: set
+github.com/Searedphantasm/bookings/cmd/web/main.go:21.13,23.16 2 0
+github.com/Searedphantasm/bookings/cmd/web/main.go:23.16,25.3 1 0
+github.com/Searedphantasm/bookings/cmd/web/main.go:27.2,34.16 4 0
+github.com/Searedphantasm/bookings/cmd/web/main.go:37.18,53.16 10 1
+github.com/Searedphantasm/bookings/cmd/web/main.go:53.16,56.3 2 0
+github.com/Searedphantasm/bookings/cmd/web/main.go:58.2,65.12 6 1
+github.com/Searedphantasm/bookings/cmd/web/middleware.go:9.45,19.2 3 1
+github.com/Searedphantasm/bookings/cmd/web/middleware.go:22.50,24.2 1 1
+github.com/Searedphantasm/bookings/cmd/web/routes.go:11.49,37.2 18 1

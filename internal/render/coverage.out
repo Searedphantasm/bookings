@@ -2,7 +2,7 @@ mode: set
 github.com/Searedphantasm/bookings/internal/render/render.go:21.40,23.2 1 1
 github.com/Searedphantasm/bookings/internal/render/render.go:26.90,33.2 5 1
 github.com/Searedphantasm/bookings/internal/render/render.go:36.116,39.18 2 1
-github.com/Searedphantasm/bookings/internal/render/render.go:39.18,41.3 1 0
+github.com/Searedphantasm/bookings/internal/render/render.go:39.18,41.3 1 1
 github.com/Searedphantasm/bookings/internal/render/render.go:41.8,43.3 1 1
 github.com/Searedphantasm/bookings/internal/render/render.go:46.2,47.9 2 1
 github.com/Searedphantasm/bookings/internal/render/render.go:47.9,49.3 1 1

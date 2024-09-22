@@ -29,6 +29,34 @@ func TestRenderTemplate(t *testing.T) {
 	}
 
 	app.TemplateCache = tc
+	app.UseCache = false
+
+	request, err := getSession()
+	if err != nil {
+		t.Error(err)
+	}
+
+	var ww myWriter
+
+	err = RenderTemplate(&ww, request, "home.page.gohtml", &models.TemplateData{})
+	if err != nil {
+		t.Error("err writing template for browser")
+	}
+
+	err = RenderTemplate(&ww, request, "non-exist.page.gohtml", &models.TemplateData{})
+	if err == nil {
+		t.Error("rendered template that does not exist")
+	}
+}
+func TestRenderTemplateWithCache(t *testing.T) {
+	pathToTemplates = "./../../templates"
+	tc, err := CreateTemplateCache()
+	if err != nil {
+		t.Error(err)
+	}
+
+	app.TemplateCache = tc
+	app.UseCache = true
 
 	request, err := getSession()
 	if err != nil {

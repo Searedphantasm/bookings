@@ -72,6 +72,7 @@ func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.
 
 	form.Required("first_name", "last_name", "email")
 	form.MinLength("first_name", 3, request)
+	form.IsEmail("email")
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
@@ -83,6 +84,11 @@ func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.
 		})
 		return
 	}
+
+	m.App.Session.Put(request.Context(), "reservation", reservation)
+
+	http.Redirect(writer, request, "/reservation-summary", http.StatusSeeOther)
+
 }
 
 // Generals renders the room page
@@ -132,4 +138,23 @@ func (m *Repository) AvailabilityJson(writer http.ResponseWriter, request *http.
 // Contact is the contact page handler
 func (m *Repository) Contact(writer http.ResponseWriter, request *http.Request) {
 	render.RenderTemplate(writer, request, "contact.page.gohtml", &models.TemplateData{})
+}
+
+func (m *Repository) ReservationSummary(writer http.ResponseWriter, request *http.Request) {
+	reservation, ok := m.App.Session.Get(request.Context(), "reservation").(models.Reservation)
+	if !ok {
+		log.Println("cannot get item from session")
+		m.App.Session.Put(request.Context(), "error", "Can't get reservation from session")
+		http.Redirect(writer, request, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(request.Context(), "reservation")
+
+	data := make(map[string]interface{})
+	data["reservation"] = reservation
+
+	render.RenderTemplate(writer, request, "reservation-summary.page.gohtml", &models.TemplateData{
+		Data: data,
+	})
 }

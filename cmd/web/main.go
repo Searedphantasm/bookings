@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"github.com/Searedphantasm/bookings/internal/config"
 	"github.com/Searedphantasm/bookings/internal/handlers"
+	"github.com/Searedphantasm/bookings/internal/helpers"
 	"github.com/Searedphantasm/bookings/internal/models"
 	"github.com/Searedphantasm/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -17,6 +19,8 @@ const portNumber = ":8080"
 
 var app config.AppConfig
 var session *scs.SessionManager
+var infoLog *log.Logger
+var errorLog *log.Logger
 
 func main() {
 	err := run()
@@ -41,6 +45,12 @@ func run() error {
 	// change this to true when in production
 	app.InProduction = false
 
+	infoLog = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infoLog
+
+	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
@@ -60,7 +70,8 @@ func run() error {
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
-
 	render.NewTemplates(&app)
+	helpers.NewHelpers(&app)
+
 	return nil
 }

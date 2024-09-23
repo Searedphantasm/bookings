@@ -12,6 +12,8 @@ import (
 	"github.com/Searedphantasm/bookings/internal/repository"
 	"github.com/Searedphantasm/bookings/internal/repository/dbrepo"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 // Repo the repository used by the handlers
@@ -66,11 +68,31 @@ func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.
 		return
 	}
 
+	sd := request.Form.Get("start_date")
+	ed := request.Form.Get("end_date")
+
+	// 2020-01-01 -- 01/02 03:04:05PM '06-0700
+
+	layout := "2006-01-02"
+	startDate, err := time.Parse(layout, sd)
+	endDate, err := time.Parse(layout, ed)
+	if err != nil {
+		helpers.ServerError(writer, err)
+	}
+
+	roomID, err := strconv.Atoi(request.Form.Get("room_id"))
+	if err != nil {
+		helpers.ServerError(writer, err)
+	}
+
 	reservation := models.Reservation{
 		FirstName: request.Form.Get("first_name"),
 		LastName:  request.Form.Get("last_name"),
 		Phone:     request.Form.Get("phone"),
 		Email:     request.Form.Get("email"),
+		StartDate: startDate,
+		EndDate:   endDate,
+		RoomID:    roomID,
 	}
 
 	form := forms.New(request.PostForm)
@@ -88,6 +110,11 @@ func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.
 			Data: data,
 		})
 		return
+	}
+
+	err = m.DB.InsertReservation(reservation)
+	if err != nil {
+		helpers.ServerError(writer, err)
 	}
 
 	m.App.Session.Put(request.Context(), "reservation", reservation)

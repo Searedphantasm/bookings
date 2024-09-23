@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/Searedphantasm/bookings/internal/config"
 	"github.com/Searedphantasm/bookings/internal/forms"
+	"github.com/Searedphantasm/bookings/internal/helpers"
 	"github.com/Searedphantasm/bookings/internal/models"
 	"github.com/Searedphantasm/bookings/internal/render"
-	"log"
 	"net/http"
 )
 
@@ -57,7 +57,7 @@ func (m *Repository) Reservations(writer http.ResponseWriter, request *http.Requ
 func (m *Repository) PostReservations(writer http.ResponseWriter, request *http.Request) {
 	err := request.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(writer, err)
 		return
 	}
 
@@ -128,7 +128,8 @@ func (m *Repository) AvailabilityJson(writer http.ResponseWriter, request *http.
 
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(writer, err)
+		return
 	}
 	//log.Println(string(out))
 	writer.Header().Set("Content-Type", "application/json")
@@ -143,7 +144,7 @@ func (m *Repository) Contact(writer http.ResponseWriter, request *http.Request) 
 func (m *Repository) ReservationSummary(writer http.ResponseWriter, request *http.Request) {
 	reservation, ok := m.App.Session.Get(request.Context(), "reservation").(models.Reservation)
 	if !ok {
-		log.Println("cannot get item from session")
+		m.App.ErrorLog.Println("Can't get reservation from session")
 		m.App.Session.Put(request.Context(), "error", "Can't get reservation from session")
 		http.Redirect(writer, request, "/", http.StatusTemporaryRedirect)
 		return

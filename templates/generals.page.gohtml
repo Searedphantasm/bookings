@@ -33,15 +33,15 @@
     <script>
         document.getElementById("check-availability-button").addEventListener("click", function () {
             let html = `
-        <form id="check-availability-form" action="/search-availability-json" method="post" novalidate class="needs-validation">
+        <form id="check-availability-form"  novalidate class="needs-validation">
             <div class="row">
                 <div class="col">
                     <div class="row" id="reservation-dates-modal">
                         <div class="col">
-                            <input disabled autocomplete="off" type="text" class="form-control" required name="start" id="start" placeholder="Arrival">
+                            <input disabled autocomplete="off" type="text" class="form-control" required name="start_date" id="start" placeholder="Arrival">
                         </div>
                         <div class="col">
-                            <input disabled autocomplete="off" type="text" class="form-control" required name="end" id="end" placeholder="Departure">
+                            <input disabled autocomplete="off" type="text" class="form-control" required name="end_date" id="end" placeholder="Departure">
                         </div>
                     </div>
                 </div>
@@ -79,10 +79,15 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.ok) {
-                                console.log("room is available")
+                                attention.custom({
+                                    icon:"success",
+                                    msg: "<p>Room is available!</p>"
+                                    + "<p><a href='#' class='btn btn-primary'>Book Now</a></p>",
+                                    showConfirmButton:false
+                                })
                             }else{
                                 attention.error({
-                                    msg:"No availability",
+                                    msg:"Room is Not availability!",
                                 })
                             }
                         })

@@ -1,9 +1,16 @@
 package repository
 
-import "github.com/Searedphantasm/bookings/internal/models"
+import (
+	"github.com/Searedphantasm/bookings/internal/models"
+	"time"
+)
 
 type DatabaseRepo interface {
 	AllUsers() bool
 
-	InsertReservation(res models.Reservation) error
+	InsertReservation(res models.Reservation) (int, error)
+	InsertRoomRestriction(rr models.RoomRestriction) error
+	SearchAvailabilityByDatesByRoomID(start, end time.Time, roomID int) (bool, error)
+	SearchAvailabilityForAllRooms(start, end time.Time) ([]models.Room, error)
+	GetRoomByID(id int) (models.Room, error)
 }

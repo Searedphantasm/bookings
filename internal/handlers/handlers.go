@@ -85,7 +85,7 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["reservation"] = res
 
-	render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "make-reservation.page.gohtml", &models.TemplateData{
 		Form:      forms.New(nil),
 		Data:      data,
 		StringMap: stringMap,
@@ -149,7 +149,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		data := make(map[string]interface{})
 		data["reservation"] = reservation
 		http.Error(w, "my own error message", http.StatusSeeOther)
-		render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "make-reservation.page.gohtml", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
@@ -186,17 +186,17 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 // Generals renders the room page
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "generals.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "generals.page.gohtml", &models.TemplateData{})
 }
 
 // Majors renders the room page
 func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "majors.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "majors.page.gohtml", &models.TemplateData{})
 }
 
 // Availability renders the search availability page
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "search-availability.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "search-availability.page.gohtml", &models.TemplateData{})
 }
 
 // PostAvailability renders the search availability page
@@ -208,8 +208,8 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	start := r.Form.Get("start")
-	end := r.Form.Get("end")
+	start := r.Form.Get("start_date")
+	end := r.Form.Get("end_date")
 
 	layout := "2006-01-02"
 	startDate, err := time.Parse(layout, start)
@@ -249,7 +249,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "reservation", res)
 
-	render.Template(w, r, "choose-room.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "choose-room.page.gohtml", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -279,8 +279,8 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sd := r.Form.Get("start")
-	ed := r.Form.Get("end")
+	sd := r.Form.Get("start_date")
+	ed := r.Form.Get("end_date")
 
 	layout := "2006-01-02"
 	startDate, _ := time.Parse(layout, sd)
@@ -320,7 +320,7 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 // Contact renders the search availability page
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "contact.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "contact.page.gohtml", &models.TemplateData{})
 }
 
 // ReservationSummary displays the reservation summary page
@@ -343,7 +343,7 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 	stringMap["start_date"] = sd
 	stringMap["end_date"] = ed
 
-	render.Template(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "reservation-summary.page.gohtml", &models.TemplateData{
 		Data:      data,
 		StringMap: stringMap,
 	})

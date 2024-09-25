@@ -76,12 +76,12 @@ func getRoutes() http.Handler {
 
 	mux.Get("/search-availability", Repo.Availability)
 	mux.Post("/search-availability", Repo.PostAvailability)
-	mux.Post("/search-availability-json", Repo.AvailabilityJson)
+	mux.Post("/search-availability-json", Repo.AvailabilityJSON)
 
 	mux.Get("/contact", Repo.Contact)
 
-	mux.Get("/make-reservation", Repo.Reservations)
-	mux.Post("/make-reservation", Repo.PostReservations)
+	mux.Get("/make-reservation", Repo.Reservation)
+	mux.Post("/make-reservation", Repo.PostReservation)
 	mux.Get("/reservation-summary", Repo.ReservationSummary)
 
 	fileServer := http.FileServer(http.Dir("./static/"))

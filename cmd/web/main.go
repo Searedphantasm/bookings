@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/gob"
 	"fmt"
 	"github.com/Searedphantasm/bookings/internal/config"
@@ -12,6 +13,7 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
+	"net/smtp"
 	"os"
 	"time"
 )
@@ -28,7 +30,21 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.SQL.Close()
+	defer func(SQL *sql.DB) {
+		err := SQL.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(db.SQL)
+
+	defer close(app.MailChan)
+
+	from := "me@here.com"
+	auth := smtp.PlainAuth("", from, "", "localhost")
+	err = smtp.SendMail("localhost:"+"1025", auth, from, []string{"you@there.com"}, []byte("Hello, world"))
+	if err != nil {
+		log.Println(err)
+	}
 
 	fmt.Println("Server is listening on port " + portNumber)
 	srv := &http.Server{
@@ -47,6 +63,8 @@ func run() (*driver.DB, error) {
 	gob.Register(models.Room{})
 	gob.Register(models.Restriction{})
 
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
 	// change this to true when in production
 	app.InProduction = false
 

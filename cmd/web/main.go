@@ -13,7 +13,6 @@ import (
 	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
-	"net/smtp"
 	"os"
 	"time"
 )
@@ -38,13 +37,17 @@ func main() {
 	}(db.SQL)
 
 	defer close(app.MailChan)
+	fmt.Println("Starting mail listener...")
+	listenForMail()
 
-	from := "me@here.com"
-	auth := smtp.PlainAuth("", from, "", "localhost")
-	err = smtp.SendMail("localhost:"+"1025", auth, from, []string{"you@there.com"}, []byte("Hello, world"))
-	if err != nil {
-		log.Println(err)
-	}
+	//msg := models.MailData{
+	//	To:      "you@there.com",
+	//	From:    "me@here.com",
+	//	Subject: "Some subject",
+	//	Content: "",
+	//}
+	//
+	//app.MailChan <- msg
 
 	fmt.Println("Server is listening on port " + portNumber)
 	srv := &http.Server{

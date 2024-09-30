@@ -19,4 +19,5 @@ type DatabaseRepo interface {
 	UpdateUser(u models.User) error
 
 	AllReservations() ([]models.Reservation, error)
+	AllNewReservations() ([]models.Reservation, error)
 }

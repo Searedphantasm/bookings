@@ -11,15 +11,23 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"time"
 )
 
-var functions = template.FuncMap{}
+var functions = template.FuncMap{
+	"humanDate": HumanDate,
+}
 var app *config.AppConfig
 var pathToTemplates = "./templates"
 
 // NewRenderer sets the config for the template pkg
 func NewRenderer(a *config.AppConfig) {
 	app = a
+}
+
+// HumanDate returns time in YYYY-MM-DD format
+func HumanDate(t time.Time) string {
+	return t.Format("2006-01-02")
 }
 
 // AddDefaultData add default data to all templates
@@ -83,7 +91,7 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	// range through all files ending with *.page.gohtml
 	for _, page := range pages {
 		name := filepath.Base(page)
-		ts, err := template.New(name).ParseFiles(page)
+		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return myCache, err
 		}

@@ -608,8 +608,9 @@ func (m *Repository) AdminPostShowReservations(w http.ResponseWriter, r *http.Re
 		data["reservation"] = res
 		//http.Error(w, "my own error message", http.StatusSeeOther)
 		render.Template(w, r, "admin-reservations-show.page.gohtml", &models.TemplateData{
-			Form: form,
-			Data: data,
+			StringMap: stringMap,
+			Form:      form,
+			Data:      data,
 		})
 		return
 	}

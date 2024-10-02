@@ -110,8 +110,10 @@ func (m *testDBRepo) GetUserByID(id int) (models.User, error) {
 }
 
 func (m *testDBRepo) Authenticate(email, testPassword string) (int, string, error) {
-
-	return 0, "", nil
+	if email == "me@here.ca" {
+		return 1, "", nil
+	}
+	return 0, "", errors.New("some error")
 }
 
 func (m *testDBRepo) UpdateUser(u models.User) error {
